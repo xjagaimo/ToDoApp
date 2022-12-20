@@ -15,9 +15,9 @@ namespace ToDo_App
         public static string getConnectionString() 
         {
             string basePath = Application.StartupPath;
-            int index = basePath.IndexOf("ToDo_App");
+            int index = basePath.IndexOf("ToDoApp");
             // add ToDo_App to path 
-            string path = basePath.Substring(0, index + @"ToDo_App\ToDo_App\ToDo_App".Length) + @"\Database.mdf";
+            string path = basePath.Substring(0, index + @"ToDoApp\ToDo_App\ToDo_App".Length) + @"\Database.mdf";
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+path+ ";Integrated Security=True;Connect Timeout=30";
             return connectionString;
             //static string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\USER\Code\C#\ToDo\ToDo_App\ToDo_App\Database.mdf;Integrated Security=True;Connect Timeout=30";
@@ -89,6 +89,28 @@ namespace ToDo_App
             refreshTable();
         }
 
+        private void testCheckBox_Click(object sender, EventArgs e)
+        {
+            string output = "";
+
+            SqlConnection dbConnection = new SqlConnection(connectionString);
+            dbConnection.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT Deskripsi FROM ActivityTracker WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
+            SqlDataReader sqlDataReader = cmd.ExecuteReader();
+
+            while (sqlDataReader.Read())
+            {
+                output = sqlDataReader.GetString(0);
+            }
+            //MessageBox.Show(output);
+
+            DescBox.Text = output;
+            sqlDataReader.Close();
+            cmd.Dispose();
+            dbConnection.Close();
+        }
+
         private void testCheckBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -125,27 +147,7 @@ namespace ToDo_App
             
         }
 
-        private void testCheckBox_Click(object sender, EventArgs e)
-        {
-            SqlConnection dbConnection = new SqlConnection(connectionString);
-            dbConnection.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT Deskripsi FROM ActivityTracker WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
-            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(cmd);
-            DataSet dataSet = new DataSet();
-            sqlDataAdapter.Fill(dataSet);
-            //MessageBox.Show(dataSet.Tables[0].Rows[0].["Aktivitas"].ToString());
-
-            //DescBox.Text =
-
-            //object itemSelected = testCheckBox.SelectedItem;
-            //MessageBox.Show("You are in the CheckedListBox.Click event.");
-            //MessageBox.Show(itemSelected.ToString());
-            //if (itemSelected.ToString() == "heya")
-            // {
-            DescBox.Text = testCheckBox.Text;
-            //}
-        }
 
         private void label1_Click(object sender, EventArgs e)
         {
