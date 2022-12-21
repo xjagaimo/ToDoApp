@@ -157,7 +157,9 @@ namespace ToDo_App
                 {
                     testCheckBox.SelectedIndex = -1;
                     previousSelected = "";
-                    //DescBox.Text = "";
+                    titleTextBox.Text = "";
+                    NewDescBox.Text = "";
+                    newDateTimePicker.Value = dateConverter(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
                 }
                 else
                 {
