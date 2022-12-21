@@ -113,7 +113,7 @@ namespace ToDo_App
                 {
                     MessageBox.Show("Error! There is already an activity with the same name.");
                 }*/
-                DescBox.Text = NewDescBox.Text;
+                //DescBox.Text = NewDescBox.Text;
                 //MessageBox.Show(titleTextBox.Text + " was successfully edited");
             }
             //cmd.Dispose();
@@ -139,7 +139,7 @@ namespace ToDo_App
                 MessageBox.Show(itemChecked.ToString() + " was succesfully deleted");
                 titleTextBox.Text = null;
                 NewDescBox.Text = null;
-                DescBox.Text = null;
+                //DescBox.Text = null;
             }
             
             //Console.Write(testCheckBox.SelectedIndex);
@@ -157,7 +157,7 @@ namespace ToDo_App
                 {
                     testCheckBox.SelectedIndex = -1;
                     previousSelected = "";
-                    DescBox.Text = "";
+                    //DescBox.Text = "";
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace ToDo_App
                     }
                     //MessageBox.Show(output);
 
-                    DescBox.Text = output;
+                    //DescBox.Text = output;
                     NewDescBox.Text = output;
                     titleTextBox.Text = itemSelected;
 
