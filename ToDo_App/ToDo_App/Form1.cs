@@ -186,5 +186,15 @@ namespace ToDo_App
         {
 
         }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NewDescBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
