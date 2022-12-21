@@ -99,22 +99,22 @@ namespace ToDo_App
 
             if (testCheckBox.SelectedItem != null)
             {
-                foreach (string obj in testCheckBox.Items)
+                /*foreach (string obj in testCheckBox.Items)
                 {
                     if (obj == titleTextBox.Text)
                         duplicate = true;
                 }
-                if (!duplicate)
-                {
-                    sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Aktivitas='" + titleTextBox.Text + "', Deskripsi='" + NewDescBox.Text +"', Waktu='" + newDateTimePicker.Value.ToString() + "' WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
-                    sqlDataAdapter.InsertCommand.ExecuteNonQuery();
-                }
+                if (!duplicate || )
+                {*/
+                sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Aktivitas='" + titleTextBox.Text + "', Deskripsi='" + NewDescBox.Text +"', Waktu='" + newDateTimePicker.Value.ToString() + "' WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
+                sqlDataAdapter.InsertCommand.ExecuteNonQuery();
+                /*}
                 else if (testCheckBox.SelectedItem.ToString() != titleTextBox.Text)
                 {
                     MessageBox.Show("Error! There is already an activity with the same name.");
-                }
+                }*/
                 DescBox.Text = NewDescBox.Text;
-                MessageBox.Show(titleTextBox.Text + " was successfully edited");
+                //MessageBox.Show(titleTextBox.Text + " was successfully edited");
             }
             //cmd.Dispose();
             dbConnection.Close();
@@ -157,6 +157,7 @@ namespace ToDo_App
                 {
                     testCheckBox.SelectedIndex = -1;
                     previousSelected = "";
+                    DescBox.Text = "";
                 }
                 else
                 {
