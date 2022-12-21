@@ -102,7 +102,7 @@ namespace ToDo_App
             {
                 foreach (string obj in testCheckBox.Items)
                 {
-                    if (obj == titleTextBox.Text)
+                    if (obj == titleTextBox.Text && titleTextBox.Text != testCheckBox.SelectedItem.ToString() )
                         duplicate = true;
                 }
                 if (!duplicate)
