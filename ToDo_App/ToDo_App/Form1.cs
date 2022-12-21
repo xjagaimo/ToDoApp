@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Data.Common;
+
 namespace ToDo_App
 {
     public partial class Form1 : Form
@@ -57,12 +59,39 @@ namespace ToDo_App
 
         private void enterButton_Click(object sender, EventArgs e)
         {
+            //SqlCommand cmd = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi) VALUES ('" + titleTextBox.Text + "','" + 1 + "','" + NewDescBox.Text + "')", dbConnection);
+            //cmd.ExecuteNonQuery();
+
+            bool exec = true;
+            bool isEdited = false;
             SqlConnection dbConnection = new SqlConnection(connectionString);
             dbConnection.Open();
 
-            SqlCommand cmd = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi) VALUES ('" + titleTextBox.Text + "','" + 1 + "','" + NewDescBox.Text + "')", dbConnection);
-            cmd.ExecuteNonQuery();
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
 
+            foreach (string obj in testCheckBox.Items)
+            {
+                if (obj == titleTextBox.Text || DescBox.Text != NewDescBox.Text)
+                    exec = false;
+                    isEdited= true;
+            }
+            if (exec)
+            {
+                // Adds new activity
+                sqlDataAdapter.InsertCommand = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi) VALUES ('" + titleTextBox.Text + "','" + 1 + "','" + NewDescBox.Text + "')", dbConnection);
+                sqlDataAdapter.InsertCommand.ExecuteNonQuery();
+            }
+            if (isEdited)
+            {
+                // Edits selected activity
+                sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Deskripsi='" + NewDescBox.Text + "' WHERE Aktivitas='" + titleTextBox.Text + "'", dbConnection);
+                sqlDataAdapter.InsertCommand.ExecuteNonQuery();
+
+                DescBox.Text = NewDescBox.Text;
+            }
+
+
+            //cmd.Dispose();
             dbConnection.Close();
             refreshTable();
         }
@@ -92,11 +121,12 @@ namespace ToDo_App
         private void testCheckBox_Click(object sender, EventArgs e)
         {
             string output = "";
+            string itemSelected = testCheckBox.SelectedItem.ToString();
 
             SqlConnection dbConnection = new SqlConnection(connectionString);
             dbConnection.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT Deskripsi FROM ActivityTracker WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
+            SqlCommand cmd = new SqlCommand("SELECT Deskripsi FROM ActivityTracker WHERE Aktivitas='" + itemSelected + "'", dbConnection);
             SqlDataReader sqlDataReader = cmd.ExecuteReader();
 
             while (sqlDataReader.Read())
@@ -106,6 +136,9 @@ namespace ToDo_App
             //MessageBox.Show(output);
 
             DescBox.Text = output;
+            NewDescBox.Text = output;
+            titleTextBox.Text = itemSelected;
+
             sqlDataReader.Close();
             cmd.Dispose();
             dbConnection.Close();

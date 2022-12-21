@@ -59,7 +59,6 @@
             this.titleTextBox.Name = "titleTextBox";
             this.titleTextBox.Size = new System.Drawing.Size(236, 30);
             this.titleTextBox.TabIndex = 2;
-            this.titleTextBox.Text = "Nama Aktivitas";
             this.titleTextBox.TextChanged += new System.EventHandler(this.titleTextBox_TextChanged);
             // 
             // enterButton
