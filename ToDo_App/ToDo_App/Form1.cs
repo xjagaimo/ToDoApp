@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data.Common;
+using System.Globalization;
 
 namespace ToDo_App
 {
@@ -25,6 +26,12 @@ namespace ToDo_App
             //static string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\USER\Code\C#\ToDo\ToDo_App\ToDo_App\Database.mdf;Integrated Security=True;Connect Timeout=30";
 
         }
+
+        public DateTime dateConverter (string date)
+        {
+            return DateTime.ParseExact(date, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
+        }
+
         static string connectionString = getConnectionString();
         public Form1()
         {
@@ -79,18 +86,33 @@ namespace ToDo_App
                 }
                 if (!duplicate)
                 {
-                    sqlDataAdapter.InsertCommand = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi) VALUES ('" + titleTextBox.Text + "','" + 1 + "','" + NewDescBox.Text + "')", dbConnection);
+                    sqlDataAdapter.InsertCommand = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi, Waktu) VALUES ('" + titleTextBox.Text + "','" + 1 + "','" + NewDescBox.Text + "','" + newDateTimePicker.Value.ToString() + "')", dbConnection);
                     sqlDataAdapter.InsertCommand.ExecuteNonQuery();
 
                     MessageBox.Show(titleTextBox.Text + " was successfully added");
+                }
+                else
+                {
+                    MessageBox.Show("Error! There is already an activity with the same name.");
                 }
             }
 
             if (testCheckBox.SelectedItem != null)
             {
-                sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Aktivitas='" + titleTextBox.Text + "', Deskripsi='" + NewDescBox.Text + "' WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
-                sqlDataAdapter.InsertCommand.ExecuteNonQuery();
-
+                foreach (string obj in testCheckBox.Items)
+                {
+                    if (obj == titleTextBox.Text)
+                        duplicate = true;
+                }
+                if (!duplicate)
+                {
+                    sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Aktivitas='" + titleTextBox.Text + "', Deskripsi='" + NewDescBox.Text +"', Waktu='" + newDateTimePicker.Value.ToString() + "' WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
+                    sqlDataAdapter.InsertCommand.ExecuteNonQuery();
+                }
+                else
+                {
+                    MessageBox.Show("Error! There is already an activity with the same name.");
+                }
                 DescBox.Text = NewDescBox.Text;
                 MessageBox.Show(titleTextBox.Text + " was successfully edited");
             }
@@ -160,6 +182,16 @@ namespace ToDo_App
                     sqlDataReader.Close();
                     cmd.Dispose();
                     dbConnection.Close();
+                    dbConnection.Open();
+                    cmd = new SqlCommand("SELECT Waktu FROM ActivityTracker WHERE Aktivitas='" + itemSelected + "'", dbConnection);
+                    SqlDataReader sqlDataReader2 = cmd.ExecuteReader();
+
+                    while (sqlDataReader2.Read())
+                    {
+                        output = sqlDataReader2.GetString(0);
+                    }
+                    dbConnection.Close();
+                    newDateTimePicker.Value = dateConverter(output);
                 }
             }
         }
