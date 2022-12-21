@@ -123,6 +123,7 @@
             this.DescBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DescBox.Multiline = true;
             this.DescBox.Name = "DescBox";
+            this.DescBox.ReadOnly = true;
             this.DescBox.Size = new System.Drawing.Size(271, 290);
             this.DescBox.TabIndex = 7;
             this.DescBox.TextChanged += new System.EventHandler(this.DescBox_TextChanged);
