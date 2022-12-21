@@ -81,6 +81,8 @@ namespace ToDo_App
                 {
                     sqlDataAdapter.InsertCommand = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi) VALUES ('" + titleTextBox.Text + "','" + 1 + "','" + NewDescBox.Text + "')", dbConnection);
                     sqlDataAdapter.InsertCommand.ExecuteNonQuery();
+
+                    MessageBox.Show(titleTextBox.Text + " was successfully added");
                 }
             }
 
@@ -88,6 +90,9 @@ namespace ToDo_App
             {
                 sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Aktivitas='" + titleTextBox.Text + "', Deskripsi='" + NewDescBox.Text + "' WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
                 sqlDataAdapter.InsertCommand.ExecuteNonQuery();
+
+                DescBox.Text = NewDescBox.Text;
+                MessageBox.Show(titleTextBox.Text + " was successfully edited");
             }
             //cmd.Dispose();
             dbConnection.Close();
@@ -108,6 +113,11 @@ namespace ToDo_App
             {
                 SqlCommand cmd = new SqlCommand("DELETE FROM ActivityTracker WHERE Aktivitas='" + itemChecked.ToString() + "'", dbConnection);
                 cmd.ExecuteNonQuery();
+
+                MessageBox.Show(itemChecked.ToString() + " was succesfully deleted");
+                titleTextBox.Text = null;
+                NewDescBox.Text = null;
+                DescBox.Text = null;
             }
             
             //Console.Write(testCheckBox.SelectedIndex);
