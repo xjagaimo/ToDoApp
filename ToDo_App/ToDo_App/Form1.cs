@@ -62,35 +62,33 @@ namespace ToDo_App
             //SqlCommand cmd = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi) VALUES ('" + titleTextBox.Text + "','" + 1 + "','" + NewDescBox.Text + "')", dbConnection);
             //cmd.ExecuteNonQuery();
 
-            bool exec = true;
-            bool isEdited = false;
+            bool duplicate = false;
             SqlConnection dbConnection = new SqlConnection(connectionString);
             dbConnection.Open();
 
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
 
-            foreach (string obj in testCheckBox.Items)
-            {
-                if (obj == titleTextBox.Text || DescBox.Text != NewDescBox.Text)
-                    exec = false;
-                    isEdited= true;
-            }
-            if (exec)
+            //if exec 
+            if (testCheckBox.SelectedItem == null)
             {
                 // Adds new activity
-                sqlDataAdapter.InsertCommand = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi) VALUES ('" + titleTextBox.Text + "','" + 1 + "','" + NewDescBox.Text + "')", dbConnection);
-                sqlDataAdapter.InsertCommand.ExecuteNonQuery();
+                foreach (string obj in testCheckBox.Items)
+                {
+                    if (obj == titleTextBox.Text)
+                        duplicate = true;
+                }
+                if (!duplicate)
+                {
+                    sqlDataAdapter.InsertCommand = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi) VALUES ('" + titleTextBox.Text + "','" + 1 + "','" + NewDescBox.Text + "')", dbConnection);
+                    sqlDataAdapter.InsertCommand.ExecuteNonQuery();
+                }
             }
-            if (isEdited)
+
+            if (testCheckBox.SelectedItem != null)
             {
-                // Edits selected activity
-                sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Deskripsi='" + NewDescBox.Text + "' WHERE Aktivitas='" + titleTextBox.Text + "'", dbConnection);
+                sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Aktivitas='" + titleTextBox.Text + "', Deskripsi='" + NewDescBox.Text + "' WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
                 sqlDataAdapter.InsertCommand.ExecuteNonQuery();
-
-                DescBox.Text = NewDescBox.Text;
             }
-
-
             //cmd.Dispose();
             dbConnection.Close();
             refreshTable();
@@ -118,30 +116,42 @@ namespace ToDo_App
             refreshTable();
         }
 
+        string previousSelected = "";
         private void testCheckBox_Click(object sender, EventArgs e)
         {
-            string output = "";
-            string itemSelected = testCheckBox.SelectedItem.ToString();
-
-            SqlConnection dbConnection = new SqlConnection(connectionString);
-            dbConnection.Open();
-
-            SqlCommand cmd = new SqlCommand("SELECT Deskripsi FROM ActivityTracker WHERE Aktivitas='" + itemSelected + "'", dbConnection);
-            SqlDataReader sqlDataReader = cmd.ExecuteReader();
-
-            while (sqlDataReader.Read())
+            if (testCheckBox.SelectedItem != null)
             {
-                output = sqlDataReader.GetString(0);
+                if (testCheckBox.SelectedItem.ToString() == previousSelected)
+                {
+                    testCheckBox.SelectedIndex = -1;
+                    previousSelected = "";
+                }
+                else
+                {
+                    string output = "";
+                    string itemSelected = testCheckBox.SelectedItem.ToString();
+                    previousSelected = testCheckBox.SelectedItem.ToString();
+                    SqlConnection dbConnection = new SqlConnection(connectionString);
+                    dbConnection.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT Deskripsi FROM ActivityTracker WHERE Aktivitas='" + itemSelected + "'", dbConnection);
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+
+                    while (sqlDataReader.Read())
+                    {
+                        output = sqlDataReader.GetString(0);
+                    }
+                    //MessageBox.Show(output);
+
+                    DescBox.Text = output;
+                    NewDescBox.Text = output;
+                    titleTextBox.Text = itemSelected;
+
+                    sqlDataReader.Close();
+                    cmd.Dispose();
+                    dbConnection.Close();
+                }
             }
-            //MessageBox.Show(output);
-
-            DescBox.Text = output;
-            NewDescBox.Text = output;
-            titleTextBox.Text = itemSelected;
-
-            sqlDataReader.Close();
-            cmd.Dispose();
-            dbConnection.Close();
         }
 
         private void testCheckBox_SelectedIndexChanged(object sender, EventArgs e)
