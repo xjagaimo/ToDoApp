@@ -231,7 +231,7 @@
             // 
             // newDateTimePicker
             // 
-            this.newDateTimePicker.CustomFormat = "dd/MM/yyyy hh:mm:ss";
+            this.newDateTimePicker.CustomFormat = "dd/MM/yyyy HH:mm:ss";
             this.newDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.newDateTimePicker.Location = new System.Drawing.Point(104, 298);
             this.newDateTimePicker.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);

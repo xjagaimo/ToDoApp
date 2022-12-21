@@ -29,7 +29,7 @@ namespace ToDo_App
 
         public DateTime dateConverter (string date)
         {
-            return DateTime.ParseExact(date, "dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
+            return DateTime.ParseExact(date, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
         }
 
         static string connectionString = getConnectionString();
