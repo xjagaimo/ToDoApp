@@ -15,6 +15,20 @@ namespace ToDo_App
 {
     public partial class Form1 : Form
     {
+
+        public void updateApp()
+        {
+            Timer timer = new Timer();
+            timer.Tick += new EventHandler(timer_tick);
+            timer.Interval = 2000;
+            timer.Start();
+        }
+
+        public void timer_tick(object sender, EventArgs ev)
+        {
+            refreshTable();
+        }
+
         public static string getConnectionString() 
         {
             string basePath = Application.StartupPath;
@@ -109,6 +123,11 @@ namespace ToDo_App
                 {
                     sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Aktivitas='" + titleTextBox.Text + "', Deskripsi='" + NewDescBox.Text +"', Waktu='" + newDateTimePicker.Value.ToString() + "' WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
                     sqlDataAdapter.InsertCommand.ExecuteNonQuery();
+                    notifPopup.Visible = true;
+                    notifPopup.Text = "what";
+                    notifPopup.BalloonTipTitle = "hi";
+                    notifPopup.BalloonTipText = "hello";
+                    notifPopup.ShowBalloonTip(800);
                 }
                 else if (testCheckBox.SelectedItem.ToString() != titleTextBox.Text)
                 {
@@ -249,6 +268,11 @@ namespace ToDo_App
         }
 
         private void NewDescBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
 
         }
