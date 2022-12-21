@@ -109,7 +109,7 @@ namespace ToDo_App
                     sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Aktivitas='" + titleTextBox.Text + "', Deskripsi='" + NewDescBox.Text +"', Waktu='" + newDateTimePicker.Value.ToString() + "' WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
                     sqlDataAdapter.InsertCommand.ExecuteNonQuery();
                 }
-                else
+                else if (testCheckBox.SelectedItem.ToString() != titleTextBox.Text)
                 {
                     MessageBox.Show("Error! There is already an activity with the same name.");
                 }
