@@ -33,7 +33,6 @@ namespace ToDo_App
                         notifPopup.BalloonTipTitle = "DEADLINE!";
                         notifPopup.BalloonTipText = dr["Aktivitas"].ToString() + "'s deadline is now.";
                         notifPopup.ShowBalloonTip(800);
-                        //MessageBox.Show(dr["Aktivitas"].ToString() + " Deadline!");
                         sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Selesai='" + 1 + "' WHERE Aktivitas='" + dr["Aktivitas"].ToString() + "'", dbConnection);
                         sqlDataAdapter.InsertCommand.ExecuteNonQuery();
                     }
@@ -73,8 +72,6 @@ namespace ToDo_App
             string path = basePath.Substring(0, index + @"ToDoApp\ToDo_App\ToDo_App".Length) + @"\Database.mdf";
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+path+ ";Integrated Security=True;Connect Timeout=30";
             return connectionString;
-            //static string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\USER\Code\C#\ToDo\ToDo_App\ToDo_App\Database.mdf;Integrated Security=True;Connect Timeout=30";
-
         }
 
         public DateTime dateConverter (string date)
@@ -94,32 +91,27 @@ namespace ToDo_App
         {
             SqlConnection dbConnection = new SqlConnection(connectionString);
             dbConnection.Open();
-
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter("select * from ActivityTracker", dbConnection);
             DataSet dataSet = new DataSet();
             sqlDataAdapter.Fill(dataSet);
             testCheckBox.Items.Clear();
+            titleTextBox.Text = null;
+            NewDescBox.Text = null;
+            checkBoxTime.Checked = false;
+            newDateTimePicker.Value = dateConverter(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
             foreach (DataTable dt in dataSet.Tables)
             {
                 foreach (DataRow dr in dt.Rows)
                 {
-                    //testCheckBox.Items.Insert(index:2, dr["Aktivitas"].ToString());
                     testCheckBox.Items.Add(dr["Aktivitas"].ToString());
                 }
             }
             dbConnection.Close();
         }
 
-        private void refreshButton_Click(object sender, EventArgs e)
-        {
-            refreshTable();
-        }
 
         private void enterButton_Click(object sender, EventArgs e)
         {
-            //SqlCommand cmd = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi) VALUES ('" + titleTextBox.Text + "','" + 1 + "','" + NewDescBox.Text + "')", dbConnection);
-            //cmd.ExecuteNonQuery();
-
             bool duplicate = false;
             SqlConnection dbConnection = new SqlConnection(connectionString);
             dbConnection.Open();
@@ -137,10 +129,8 @@ namespace ToDo_App
                 }
                 if (!duplicate)
                 {
-                    //testTime(newDateTimePicker.Value);
                     sqlDataAdapter.InsertCommand = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi, Waktu, Notifikasi) VALUES ('" + titleTextBox.Text + "','" + 0 + "','" + NewDescBox.Text + "','" + newDateTimePicker.Value.ToString() + "','" + checkBoxTime.Checked + "')", dbConnection);
                     sqlDataAdapter.InsertCommand.ExecuteNonQuery();
-                    //MessageBox.Show(titleTextBox.Text + " was successfully added");
                 }
                 else
                 {
@@ -164,10 +154,7 @@ namespace ToDo_App
                 {
                     MessageBox.Show("Error! There is already an activity with the same name.");
                 }
-                //DescBox.Text = NewDescBox.Text;
-                //MessageBox.Show(titleTextBox.Text + " was successfully edited");
             }
-            //cmd.Dispose();
             dbConnection.Close();
             refreshTable();
         }
@@ -181,20 +168,11 @@ namespace ToDo_App
         {
             SqlConnection dbConnection = new SqlConnection(connectionString);
             dbConnection.Open();
-
             foreach (object itemChecked in testCheckBox.CheckedItems)
             {
                 SqlCommand cmd = new SqlCommand("DELETE FROM ActivityTracker WHERE Aktivitas='" + itemChecked.ToString() + "'", dbConnection);
                 cmd.ExecuteNonQuery();
-
-                //MessageBox.Show(itemChecked.ToString() + " was succesfully deleted");
-                titleTextBox.Text = null;
-                NewDescBox.Text = null;
-                //DescBox.Text = null;
             }
-            
-            //Console.Write(testCheckBox.SelectedIndex);
-            
             dbConnection.Close();
             refreshTable();
         }
@@ -208,8 +186,8 @@ namespace ToDo_App
                 {
                     testCheckBox.SelectedIndex = -1;
                     previousSelected = "";
-                    titleTextBox.Text = "";
-                    NewDescBox.Text = "";
+                    titleTextBox.Text = null;
+                    NewDescBox.Text = null;
                     checkBoxTime.Checked = false;
                     newDateTimePicker.Value = dateConverter(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
                 }
@@ -228,19 +206,12 @@ namespace ToDo_App
                     {
                         output = sqlDataReader.GetString(0);
                     }
-                    //MessageBox.Show(output);
-
-                    //DescBox.Text = output;
                     NewDescBox.Text = output;
                     titleTextBox.Text = itemSelected;
-
                     sqlDataReader.Close();
                     cmd.Dispose();
-                    //dbConnection.Close();
-                    //dbConnection.Open();
                     cmd = new SqlCommand("SELECT Waktu FROM ActivityTracker WHERE Aktivitas='" + itemSelected + "'", dbConnection);
                     SqlDataReader sqlDataReader2 = cmd.ExecuteReader();
-
                     while (sqlDataReader2.Read())
                     {
                         output = sqlDataReader2.GetString(0);

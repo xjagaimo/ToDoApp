@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.refreshButton = new System.Windows.Forms.Button();
             this.titleTextBox = new System.Windows.Forms.TextBox();
             this.enterButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
@@ -49,16 +48,6 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // refreshButton
-            // 
-            this.refreshButton.Location = new System.Drawing.Point(66, 404);
-            this.refreshButton.Name = "refreshButton";
-            this.refreshButton.Size = new System.Drawing.Size(75, 23);
-            this.refreshButton.TabIndex = 0;
-            this.refreshButton.Text = "hey :)";
-            this.refreshButton.UseVisualStyleBackColor = true;
-            this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
             // 
             // titleTextBox
             // 
@@ -240,7 +229,6 @@
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.enterButton);
             this.Controls.Add(this.WhatIsChecked);
-            this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
             this.Text = "To Do App: Your Personal Activity Tracker";
@@ -254,8 +242,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button refreshButton;
         private System.Windows.Forms.TextBox titleTextBox;
         private System.Windows.Forms.Button enterButton;
         private System.Windows.Forms.Button deleteButton;
