@@ -27,7 +27,7 @@ namespace ToDo_App
             {
                 foreach (DataRow dr in dt.Rows)
                 {
-                    if (testTime(dateConverter(dr["Waktu"].ToString())) && !Convert.ToBoolean(dr["Selesai"]))
+                    if (testTime(dateConverter(dr["Waktu"].ToString())) && !(bool)dr["Selesai"] && (bool)dr["Notifikasi"])
                     {
                         notifPopup.Visible = true;
                         notifPopup.BalloonTipTitle = "DEADLINE!";
@@ -46,8 +46,6 @@ namespace ToDo_App
         {
             if ((date - DateTime.Now).TotalSeconds <= 0)
             {
-                //return true;
-                //MessageBox.Show((date - DateTime.Now).TotalSeconds.ToString());
                 return true;
             }
             return false;
@@ -89,8 +87,8 @@ namespace ToDo_App
         {
             InitializeComponent();
             refreshTable();
+            updateApp();
         }
-
 
         public void refreshTable()
         {
@@ -140,9 +138,8 @@ namespace ToDo_App
                 if (!duplicate)
                 {
                     //testTime(newDateTimePicker.Value);
-                    sqlDataAdapter.InsertCommand = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi, Waktu) VALUES ('" + titleTextBox.Text + "','" + 0 + "','" + NewDescBox.Text + "','" + newDateTimePicker.Value.ToString() + "')", dbConnection);
+                    sqlDataAdapter.InsertCommand = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi, Waktu, Notifikasi) VALUES ('" + titleTextBox.Text + "','" + 0 + "','" + NewDescBox.Text + "','" + newDateTimePicker.Value.ToString() + "','" + checkBoxTime.Checked + "')", dbConnection);
                     sqlDataAdapter.InsertCommand.ExecuteNonQuery();
-
                     //MessageBox.Show(titleTextBox.Text + " was successfully added");
                 }
                 else
@@ -160,7 +157,7 @@ namespace ToDo_App
                 }
                 if (!duplicate)
                 {
-                    sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Aktivitas='" + titleTextBox.Text + "', Deskripsi='" + NewDescBox.Text +"', Waktu='" + newDateTimePicker.Value.ToString() + "' WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
+                    sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Aktivitas='" + titleTextBox.Text + "', Deskripsi='" + NewDescBox.Text +"', Waktu='" + newDateTimePicker.Value.ToString() + "', Notifikasi='" + checkBoxTime.Checked + "' WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
                     sqlDataAdapter.InsertCommand.ExecuteNonQuery();
                 }
                 else if (testCheckBox.SelectedItem.ToString() != titleTextBox.Text)
@@ -213,6 +210,7 @@ namespace ToDo_App
                     previousSelected = "";
                     titleTextBox.Text = "";
                     NewDescBox.Text = "";
+                    checkBoxTime.Checked = false;
                     newDateTimePicker.Value = dateConverter(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
                 }
                 else
@@ -247,8 +245,18 @@ namespace ToDo_App
                     {
                         output = sqlDataReader2.GetString(0);
                     }
-                    dbConnection.Close();
                     newDateTimePicker.Value = dateConverter(output);
+                    sqlDataReader2.Close();
+                    cmd.Dispose();
+                    bool val = false;
+                    cmd = new SqlCommand("SELECT Notifikasi FROM ActivityTracker WHERE Aktivitas='" + itemSelected + "'", dbConnection);
+                    SqlDataReader sqlDataReader3 = cmd.ExecuteReader();
+                    while (sqlDataReader3.Read())
+                    {
+                        val = sqlDataReader3.GetBoolean(0);
+                    }
+                    checkBoxTime.Checked = val;
+                    dbConnection.Close();
                 }
             }
         }
@@ -313,7 +321,6 @@ namespace ToDo_App
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            updateApp();
         }
     }
 }
