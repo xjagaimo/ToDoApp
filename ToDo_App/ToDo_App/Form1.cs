@@ -157,7 +157,7 @@ namespace ToDo_App
                 }
                 if (!duplicate)
                 {
-                    sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Aktivitas='" + titleTextBox.Text + "', Deskripsi='" + NewDescBox.Text +"', Waktu='" + newDateTimePicker.Value.ToString() + "', Notifikasi='" + checkBoxTime.Checked + "' WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
+                    sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Aktivitas='" + titleTextBox.Text + "', Selesai='" + 0 + "', Deskripsi='" + NewDescBox.Text +"', Waktu='" + newDateTimePicker.Value.ToString() + "', Notifikasi='" + checkBoxTime.Checked + "' WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
                     sqlDataAdapter.InsertCommand.ExecuteNonQuery();
                 }
                 else if (testCheckBox.SelectedItem.ToString() != titleTextBox.Text)
