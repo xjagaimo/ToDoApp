@@ -92,6 +92,7 @@
             // testCheckBox
             // 
             this.testCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.testCheckBox.ForeColor = System.Drawing.Color.Black;
             this.testCheckBox.FormattingEnabled = true;
             this.testCheckBox.Location = new System.Drawing.Point(7, 49);
             this.testCheckBox.Name = "testCheckBox";
@@ -103,7 +104,7 @@
             // WhatIsChecked
             // 
             this.WhatIsChecked.Location = new System.Drawing.Point(154, 404);
-            this.WhatIsChecked.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.WhatIsChecked.Margin = new System.Windows.Forms.Padding(2);
             this.WhatIsChecked.Name = "WhatIsChecked";
             this.WhatIsChecked.Size = new System.Drawing.Size(111, 31);
             this.WhatIsChecked.TabIndex = 6;
@@ -115,7 +116,7 @@
             // 
             this.NewDescBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NewDescBox.Location = new System.Drawing.Point(86, 63);
-            this.NewDescBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.NewDescBox.Margin = new System.Windows.Forms.Padding(2);
             this.NewDescBox.Multiline = true;
             this.NewDescBox.Name = "NewDescBox";
             this.NewDescBox.Size = new System.Drawing.Size(230, 223);
@@ -167,9 +168,9 @@
             this.groupBox1.Controls.Add(this.titleTextBox);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(282, 37);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(326, 353);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
@@ -190,7 +191,7 @@
             // 
             this.checkBoxTime.AutoSize = true;
             this.checkBoxTime.Location = new System.Drawing.Point(86, 305);
-            this.checkBoxTime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBoxTime.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxTime.Name = "checkBoxTime";
             this.checkBoxTime.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTime.TabIndex = 17;
@@ -201,7 +202,7 @@
             this.newDateTimePicker.CustomFormat = "dd/MM/yyyy HH:mm:ss";
             this.newDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.newDateTimePicker.Location = new System.Drawing.Point(104, 298);
-            this.newDateTimePicker.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.newDateTimePicker.Margin = new System.Windows.Forms.Padding(2);
             this.newDateTimePicker.Name = "newDateTimePicker";
             this.newDateTimePicker.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.newDateTimePicker.ShowUpDown = true;
@@ -214,9 +215,9 @@
             this.groupBox2.Controls.Add(this.testCheckBox);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(19, 37);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(246, 353);
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
@@ -243,6 +244,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
             this.Text = "To Do App: Your Personal Activity Tracker";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

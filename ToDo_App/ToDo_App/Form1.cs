@@ -16,17 +16,55 @@ namespace ToDo_App
     public partial class Form1 : Form
     {
 
+        public void test()
+        {
+            SqlConnection dbConnection = new SqlConnection(connectionString);
+            dbConnection.Open();
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter("select * from ActivityTracker", dbConnection);
+            DataSet dataSet = new DataSet();
+            sqlDataAdapter.Fill(dataSet);
+            foreach (DataTable dt in dataSet.Tables)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (testTime(dateConverter(dr["Waktu"].ToString())) && !Convert.ToBoolean(dr["Selesai"]))
+                    {
+                        notifPopup.Visible = true;
+                        notifPopup.BalloonTipTitle = "DEADLINE!";
+                        notifPopup.BalloonTipText = dr["Aktivitas"].ToString() + "'s deadline is now.";
+                        notifPopup.ShowBalloonTip(800);
+                        //MessageBox.Show(dr["Aktivitas"].ToString() + " Deadline!");
+                        sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Selesai='" + 1 + "' WHERE Aktivitas='" + dr["Aktivitas"].ToString() + "'", dbConnection);
+                        sqlDataAdapter.InsertCommand.ExecuteNonQuery();
+                    }
+                }
+            }
+            dbConnection.Close();
+        }
+
+        public bool testTime(DateTime date)
+        {
+            if ((date - DateTime.Now).TotalSeconds <= 0)
+            {
+                //return true;
+                //MessageBox.Show((date - DateTime.Now).TotalSeconds.ToString());
+                return true;
+            }
+            return false;
+        }
+
         public void updateApp()
         {
             Timer timer = new Timer();
             timer.Tick += new EventHandler(timer_tick);
-            timer.Interval = 2000;
+            //5 seconds
+            timer.Interval = 5000;
             timer.Start();
         }
 
         public void timer_tick(object sender, EventArgs ev)
         {
-            refreshTable();
+            test();
         }
 
         public static string getConnectionString() 
@@ -101,10 +139,11 @@ namespace ToDo_App
                 }
                 if (!duplicate)
                 {
-                    sqlDataAdapter.InsertCommand = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi, Waktu) VALUES ('" + titleTextBox.Text + "','" + 1 + "','" + NewDescBox.Text + "','" + newDateTimePicker.Value.ToString() + "')", dbConnection);
+                    //testTime(newDateTimePicker.Value);
+                    sqlDataAdapter.InsertCommand = new SqlCommand("INSERT INTO ActivityTracker (Aktivitas, Selesai, Deskripsi, Waktu) VALUES ('" + titleTextBox.Text + "','" + 0 + "','" + NewDescBox.Text + "','" + newDateTimePicker.Value.ToString() + "')", dbConnection);
                     sqlDataAdapter.InsertCommand.ExecuteNonQuery();
 
-                    MessageBox.Show(titleTextBox.Text + " was successfully added");
+                    //MessageBox.Show(titleTextBox.Text + " was successfully added");
                 }
                 else
                 {
@@ -123,11 +162,6 @@ namespace ToDo_App
                 {
                     sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Aktivitas='" + titleTextBox.Text + "', Deskripsi='" + NewDescBox.Text +"', Waktu='" + newDateTimePicker.Value.ToString() + "' WHERE Aktivitas='" + testCheckBox.SelectedItem.ToString() + "'", dbConnection);
                     sqlDataAdapter.InsertCommand.ExecuteNonQuery();
-                    notifPopup.Visible = true;
-                    notifPopup.Text = "what";
-                    notifPopup.BalloonTipTitle = "hi";
-                    notifPopup.BalloonTipText = "hello";
-                    notifPopup.ShowBalloonTip(800);
                 }
                 else if (testCheckBox.SelectedItem.ToString() != titleTextBox.Text)
                 {
@@ -156,7 +190,7 @@ namespace ToDo_App
                 SqlCommand cmd = new SqlCommand("DELETE FROM ActivityTracker WHERE Aktivitas='" + itemChecked.ToString() + "'", dbConnection);
                 cmd.ExecuteNonQuery();
 
-                MessageBox.Show(itemChecked.ToString() + " was succesfully deleted");
+                //MessageBox.Show(itemChecked.ToString() + " was succesfully deleted");
                 titleTextBox.Text = null;
                 NewDescBox.Text = null;
                 //DescBox.Text = null;
@@ -204,8 +238,8 @@ namespace ToDo_App
 
                     sqlDataReader.Close();
                     cmd.Dispose();
-                    dbConnection.Close();
-                    dbConnection.Open();
+                    //dbConnection.Close();
+                    //dbConnection.Open();
                     cmd = new SqlCommand("SELECT Waktu FROM ActivityTracker WHERE Aktivitas='" + itemSelected + "'", dbConnection);
                     SqlDataReader sqlDataReader2 = cmd.ExecuteReader();
 
@@ -275,6 +309,11 @@ namespace ToDo_App
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
 
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            updateApp();
         }
     }
 }
