@@ -39,7 +39,7 @@ namespace ToDo_App
                         notifPopup.Visible = true;
                         notifPopup.Text = "Reminder Notes";
                         notifPopup.BalloonTipTitle = "Reminder Notes";
-                        notifPopup.BalloonTipText = dr["Aktivitas"].ToString() + " is now.";
+                        notifPopup.BalloonTipText = "It is time for " + dr["Aktivitas"].ToString();
                         notifPopup.ShowBalloonTip(800);
                         sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Selesai='" + 1 + "' WHERE Aktivitas='" + dr["Aktivitas"].ToString() + "'", dbConnection);
                         sqlDataAdapter.InsertCommand.ExecuteNonQuery();
@@ -121,7 +121,7 @@ namespace ToDo_App
                 }
                 else
                 {
-                    MessageBox.Show("Error! There is already an activity with the same name.");
+                    MessageBox.Show("Error! Activity with the same title already exists.");
                 }
             }
 
@@ -139,7 +139,7 @@ namespace ToDo_App
                 }
                 else if (testCheckBox.SelectedItem.ToString() != titleTextBox.Text)
                 {
-                    MessageBox.Show("Error! There is already an activity with the same name.");
+                    MessageBox.Show("Error! Activity with the same title already exists.");
                 }
             }
             dbConnection.Close();
