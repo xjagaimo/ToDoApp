@@ -214,7 +214,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.ShowIcon = false;
-            this.Text = "To Do App: Your Personal Activity Tracker";
+            this.Text = "Reminder Notes: Your Personal Activity Tracker";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

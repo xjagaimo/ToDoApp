@@ -37,8 +37,9 @@ namespace ToDo_App
                     if (package.testTime(package.dateConverter(dr["Waktu"].ToString())) && !(bool)dr["Selesai"] && (bool)dr["Notifikasi"])
                     {
                         notifPopup.Visible = true;
-                        notifPopup.BalloonTipTitle = "DEADLINE!";
-                        notifPopup.BalloonTipText = dr["Aktivitas"].ToString() + "'s deadline is now.";
+                        notifPopup.Text = "Reminder Notes";
+                        notifPopup.BalloonTipTitle = "Reminder Notes";
+                        notifPopup.BalloonTipText = dr["Aktivitas"].ToString() + " is now.";
                         notifPopup.ShowBalloonTip(800);
                         sqlDataAdapter.InsertCommand = new SqlCommand("UPDATE ActivityTracker SET Selesai='" + 1 + "' WHERE Aktivitas='" + dr["Aktivitas"].ToString() + "'", dbConnection);
                         sqlDataAdapter.InsertCommand.ExecuteNonQuery();
