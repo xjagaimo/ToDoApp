@@ -16,7 +16,12 @@ namespace ToDo_App
 {
     public partial class Form1 : Form
     {
-
+        public Form1()
+        {
+            InitializeComponent();
+            refreshTable();
+            updateApp();
+        }
         public void test()
         {
             Pkg1 package = new Pkg1();
@@ -42,8 +47,6 @@ namespace ToDo_App
             }
             dbConnection.Close();
         }
-
-
         public void updateApp()
         {
             Timer timer = new Timer();
@@ -62,21 +65,13 @@ namespace ToDo_App
         {
             string basePath = Application.StartupPath;
             int index = basePath.IndexOf("ToDoApp");
-            // add ToDo_App to path 
             string path = basePath.Substring(0, index + @"ToDoApp\ToDo_App\ToDo_App".Length) + @"\Database.mdf";
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+path+ ";Integrated Security=True;Connect Timeout=30";
             return connectionString;
         }
 
-
-
         static string connectionString = getConnectionString();
-        public Form1()
-        {
-            InitializeComponent();
-            refreshTable();
-            updateApp();
-        }
+
 
         public void refreshTable()
         {
@@ -100,7 +95,6 @@ namespace ToDo_App
             }
             dbConnection.Close();
         }
-
 
         private void enterButton_Click(object sender, EventArgs e)
         {
@@ -130,7 +124,7 @@ namespace ToDo_App
                 }
             }
 
-            if (testCheckBox.SelectedItem != null)
+            else if (testCheckBox.SelectedItem != null)
             {
                 foreach (string obj in testCheckBox.Items)
                 {
@@ -149,11 +143,6 @@ namespace ToDo_App
             }
             dbConnection.Close();
             refreshTable();
-        }
-
-        private void titleTextBox_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
@@ -223,68 +212,6 @@ namespace ToDo_App
                     dbConnection.Close();
                 }
             }
-        }
-
-        private void testCheckBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DescBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-
-        // CODE BELOW IS FOR TESTING ONLY
-        private void WhatIsChecked_Click(object sender, EventArgs e)
-        {
-                // Display in a message box all the items that are checked.
-
-                // First show the index and check state of all selected items.
-                foreach (int indexChecked in testCheckBox.CheckedIndices)
-                {
-                    // The indexChecked variable contains the index of the item.
-                    MessageBox.Show("Index#: " + indexChecked.ToString() + ", is checked. Checked state is:" +
-                                    testCheckBox.GetItemCheckState(indexChecked).ToString() + ".");
-                }
-
-                // Next show the object title and check state for each item selected.
-                foreach (object itemChecked in testCheckBox.CheckedItems)
-                {
-
-                    // Use the IndexOf method to get the index of an item.
-                    MessageBox.Show("Item with title: \"" + itemChecked.ToString() +
-                                    "\", is checked. Checked state is: " +
-                                    testCheckBox.GetItemCheckState(testCheckBox.Items.IndexOf(itemChecked)).ToString() + ".");
-                }
-            
-        }
-
-
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void NewDescBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
         }
     }
 }

@@ -34,7 +34,6 @@
             this.enterButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
             this.testCheckBox = new System.Windows.Forms.CheckedListBox();
-            this.WhatIsChecked = new System.Windows.Forms.Button();
             this.NewDescBox = new System.Windows.Forms.TextBox();
             this.LabelAct = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -56,7 +55,6 @@
             this.titleTextBox.Name = "titleTextBox";
             this.titleTextBox.Size = new System.Drawing.Size(230, 23);
             this.titleTextBox.TabIndex = 2;
-            this.titleTextBox.TextChanged += new System.EventHandler(this.titleTextBox_TextChanged);
             // 
             // enterButton
             // 
@@ -88,18 +86,6 @@
             this.testCheckBox.Size = new System.Drawing.Size(230, 256);
             this.testCheckBox.TabIndex = 5;
             this.testCheckBox.Click += new System.EventHandler(this.testCheckBox_Click);
-            this.testCheckBox.SelectedIndexChanged += new System.EventHandler(this.testCheckBox_SelectedIndexChanged);
-            // 
-            // WhatIsChecked
-            // 
-            this.WhatIsChecked.Location = new System.Drawing.Point(154, 404);
-            this.WhatIsChecked.Margin = new System.Windows.Forms.Padding(2);
-            this.WhatIsChecked.Name = "WhatIsChecked";
-            this.WhatIsChecked.Size = new System.Drawing.Size(111, 31);
-            this.WhatIsChecked.TabIndex = 6;
-            this.WhatIsChecked.Text = "WhatIsChecked";
-            this.WhatIsChecked.UseVisualStyleBackColor = true;
-            this.WhatIsChecked.Click += new System.EventHandler(this.WhatIsChecked_Click);
             // 
             // NewDescBox
             // 
@@ -110,7 +96,6 @@
             this.NewDescBox.Name = "NewDescBox";
             this.NewDescBox.Size = new System.Drawing.Size(230, 223);
             this.NewDescBox.TabIndex = 8;
-            this.NewDescBox.TextChanged += new System.EventHandler(this.NewDescBox_TextChanged);
             // 
             // LabelAct
             // 
@@ -122,7 +107,6 @@
             this.LabelAct.Size = new System.Drawing.Size(67, 17);
             this.LabelAct.TabIndex = 9;
             this.LabelAct.Text = "Activities:";
-            this.LabelAct.Click += new System.EventHandler(this.label1_Click);
             // 
             // label1
             // 
@@ -211,14 +195,12 @@
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "View Activities";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // notifPopup
             // 
             this.notifPopup.Icon = ((System.Drawing.Icon)(resources.GetObject("notifPopup.Icon")));
             this.notifPopup.Text = "notifyIcon1";
             this.notifPopup.Visible = true;
-            this.notifPopup.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
             // Form1
             // 
@@ -228,12 +210,11 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.enterButton);
-            this.Controls.Add(this.WhatIsChecked);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
+            this.ShowIcon = false;
             this.Text = "To Do App: Your Personal Activity Tracker";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -247,7 +228,6 @@
         private System.Windows.Forms.Button enterButton;
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.CheckedListBox testCheckBox;
-        private System.Windows.Forms.Button WhatIsChecked;
         private System.Windows.Forms.TextBox NewDescBox;
         private System.Windows.Forms.Label LabelAct;
         private System.Windows.Forms.Label label1;
