@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data.Common;
 using System.Globalization;
+using ToDo.Package.Rexiar;
 
 namespace ToDo_App
 {
@@ -18,6 +19,7 @@ namespace ToDo_App
 
         public void test()
         {
+            Pkg1 package = new Pkg1();
             SqlConnection dbConnection = new SqlConnection(connectionString);
             dbConnection.Open();
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter("select * from ActivityTracker", dbConnection);
@@ -27,7 +29,7 @@ namespace ToDo_App
             {
                 foreach (DataRow dr in dt.Rows)
                 {
-                    if (testTime(dateConverter(dr["Waktu"].ToString())) && !(bool)dr["Selesai"] && (bool)dr["Notifikasi"])
+                    if (package.testTime(package.dateConverter(dr["Waktu"].ToString())) && !(bool)dr["Selesai"] && (bool)dr["Notifikasi"])
                     {
                         notifPopup.Visible = true;
                         notifPopup.BalloonTipTitle = "DEADLINE!";
@@ -41,14 +43,6 @@ namespace ToDo_App
             dbConnection.Close();
         }
 
-        public bool testTime(DateTime date)
-        {
-            if ((date - DateTime.Now).TotalSeconds <= 0)
-            {
-                return true;
-            }
-            return false;
-        }
 
         public void updateApp()
         {
@@ -74,10 +68,7 @@ namespace ToDo_App
             return connectionString;
         }
 
-        public DateTime dateConverter (string date)
-        {
-            return DateTime.ParseExact(date, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-        }
+
 
         static string connectionString = getConnectionString();
         public Form1()
@@ -89,6 +80,7 @@ namespace ToDo_App
 
         public void refreshTable()
         {
+            Pkg1 package = new Pkg1();
             SqlConnection dbConnection = new SqlConnection(connectionString);
             dbConnection.Open();
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter("select * from ActivityTracker", dbConnection);
@@ -98,7 +90,7 @@ namespace ToDo_App
             titleTextBox.Text = null;
             NewDescBox.Text = null;
             checkBoxTime.Checked = false;
-            newDateTimePicker.Value = dateConverter(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+            newDateTimePicker.Value = package.dateConverter(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
             foreach (DataTable dt in dataSet.Tables)
             {
                 foreach (DataRow dr in dt.Rows)
@@ -180,6 +172,7 @@ namespace ToDo_App
         string previousSelected = "";
         private void testCheckBox_Click(object sender, EventArgs e)
         {
+            Pkg1 package = new Pkg1();
             if (testCheckBox.SelectedItem != null)
             {
                 if (testCheckBox.SelectedItem.ToString() == previousSelected)
@@ -189,7 +182,7 @@ namespace ToDo_App
                     titleTextBox.Text = null;
                     NewDescBox.Text = null;
                     checkBoxTime.Checked = false;
-                    newDateTimePicker.Value = dateConverter(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+                    newDateTimePicker.Value = package.dateConverter(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
                 }
                 else
                 {
@@ -216,7 +209,7 @@ namespace ToDo_App
                     {
                         output = sqlDataReader2.GetString(0);
                     }
-                    newDateTimePicker.Value = dateConverter(output);
+                    newDateTimePicker.Value = package.dateConverter(output);
                     sqlDataReader2.Close();
                     cmd.Dispose();
                     bool val = false;

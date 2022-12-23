@@ -50,3 +50,5 @@ C:\Users\USER\Code\C#\ToDo_App\ToDoApp\ToDo_App\ToDo_App\obj\Debug\ToDo_App.cspr
 C:\Users\USER\Code\C#\ToDo_App\ToDoApp\ToDo_App\ToDo_App\obj\Debug\ToDo_App.csproj.CoreCompileInputs.cache
 C:\Users\USER\Code\C#\ToDo_App\ToDoApp\ToDo_App\ToDo_App\obj\Debug\ToDo_App.exe
 C:\Users\USER\Code\C#\ToDo_App\ToDoApp\ToDo_App\ToDo_App\obj\Debug\ToDo_App.pdb
+C:\Users\USER\Code\C#\ToDo_App\ToDoApp\ToDo_App\ToDo_App\bin\Debug\ToDo.Package.Rexiar.dll
+C:\Users\USER\Code\C#\ToDo_App\ToDoApp\ToDo_App\ToDo_App\obj\Debug\ToDo_App.csproj.CopyComplete

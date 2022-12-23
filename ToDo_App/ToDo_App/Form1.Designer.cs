@@ -230,6 +230,7 @@
             this.Controls.Add(this.enterButton);
             this.Controls.Add(this.WhatIsChecked);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "To Do App: Your Personal Activity Tracker";
             this.Load += new System.EventHandler(this.Form1_Load);
