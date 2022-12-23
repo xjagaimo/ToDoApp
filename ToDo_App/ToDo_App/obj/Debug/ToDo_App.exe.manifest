@@ -72,7 +72,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>/AFDCNdiABJzhx3IUAafTZzJjzM5hIK9HzzFw0IjNgw=</dsig:DigestValue>
+      <dsig:DigestValue>GRVBANSvUsuBWMFrK3ODIQ+YD88G6IaYxJuSMgMgV7A=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Database_log.ldf" size="8388608" writeableType="applicationData">
@@ -81,7 +81,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>84PGCxFlK2R5JXHushReC8+Jd1FFhfOU3gG1nBSixr0=</dsig:DigestValue>
+      <dsig:DigestValue>YWYhMGOZtNKb+ImRoJdBSocn4rjICYUETdsWmW+fXng=</dsig:DigestValue>
     </hash>
   </file>
   <file name="itstime.ico" size="107683">
